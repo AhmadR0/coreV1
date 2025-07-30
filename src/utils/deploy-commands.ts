@@ -2,12 +2,17 @@
 import { REST, Routes } from 'discord.js';
 import { config } from 'dotenv';
 import { data as pingData } from '../bot/commands/slash/ping';
+import {data as registerData} from '../bot/commands/slash/register'
 
 
 config();
 
 
-const commands = [pingData.toJSON()];
+const commands = [
+    pingData.toJSON(), 
+    registerData.toJSON()
+];
+
 
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN_ID!);
