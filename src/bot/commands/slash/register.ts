@@ -6,72 +6,61 @@ export const playerData = new Map<string, Player>();
 interface Player {
   discordId: string;
   username: string;
-  charName: string;
-  class: string;
-  level: number;
-  hp: number;
-  attack: number;
 }
 
 export const data = new SlashCommandBuilder()
     .setName('register')
     .setDescription('Gunakan ini untuk membuat karakter')
-    .addStringOption(option =>
-        option.setName('nama')
-            .setDescription('Nama Karater mu')
-            .setRequired(true)
-    )
-    .addStringOption(option =>
-        option.setName('kelas')
-            .setDescription('Pilih kelas karakter')
-            .setRequired(true)
-            .addChoices(
-                { name: 'Ksatria', value: 'warrior' },
-                { name: 'Penyihir', value: 'mage' },
-                { name: 'Pemanah', value: 'archer' }
-            )
-    );
+    // .addStringOption(option =>
+    //     option.setName('nama')
+    //         .setDescription('Nama Karater mu')
+    //         .setRequired(true)
+    // )
+    // .addStringOption(option =>
+    //     option.setName('kelas')
+    //         .setDescription('Pilih kelas karakter')
+    //         .setRequired(true)
+    //         .addChoices(
+    //             { name: 'Ksatria', value: 'warrior' },
+    //             { name: 'Penyihir', value: 'mage' },
+    //             { name: 'Pemanah', value: 'archer' }
+    //         )
+    // );
 
 export async function execute(interaction: ChatInputCommandInteraction) {
-    const nama = interaction.options.getString('nama')!;
-    const kelas = interaction.options.getString('kelas')!;
+    // const nama = interaction.options.getString('nama')!;
+    // const kelas = interaction.options.getString('kelas')!;
     const discordId = interaction.user.id;
+    const discordUsername = interaction.user.username;
+    const iamgeUser = interaction.user.displayAvatarURL();
 
 
-    if (playerData.has(discordId)) {
-        return interaction.reply({
-            content: '❌ Kamu sudah terdaftar!',
-            ephemeral: true
-        })
-    }
+    // if (playerData.has(discordId)) {
+    //     return interaction.reply({
+    //         content: '❌ Kamu sudah terdaftar!',
+    //         ephemeral: true
+    //     })
+    // }
 
-    const baseStats = {
-        warrior: { hp: 120, attack: 15 },
-        mage: { hp: 80, attack: 25 },
-        archer: { hp: 100, attack: 20 }
-    }
+   
 
-    const newPlayer: Player = {
-        discordId,
-        username: interaction.user.username,
-        charName: nama,
-        class: kelas,
-        level: 1,
-        hp: baseStats[kelas as keyof typeof baseStats].hp,
-        attack: baseStats[kelas as keyof typeof baseStats].attack
-    };
+    // const newPlayer: Player = {
+    //     discordId,
+    //     username: interaction.user.username
+    // };
 
-    playerData.set(discordId,newPlayer);
+    // playerData.set(discordId,newPlayer);
 
     const embed = new EmbedBuilder()
         .setTitle('🎉 Pendaftaran Berhasil!')
-        .setDescription(`**${newPlayer.charName}** (${kelas}) siap bertualang!`)
+        .setDescription(`Player yang baru mendaftar:`)
         .addFields(
-            { name: 'Level', value: '1', inline: true },
-            { name: 'HP', value: newPlayer.hp.toString(), inline: true },
-            { name: 'Attack', value: newPlayer.attack.toString(), inline: true }
+            { name: 'dicordId', value: `${discordId}`, inline: true },
+            { name: 'Name', value: `${discordUsername}`, inline: true },
+            { name: 'Attack', value: `${iamgeUser}`, inline: true },
         )
-        .setColor(0x00ff00);
+        .setFooter({text:'ini foternya cok'})
+        .setColor("Green");
 
     await interaction.reply({ embeds: [embed] });
 
