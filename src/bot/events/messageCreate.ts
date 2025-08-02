@@ -1,9 +1,11 @@
 // src/bot/events/messageCreate.ts
 import { Message } from 'discord.js';
 import { execute as pingExecute, name as pingName } from '../commands/prefix/ping';
+import { execute as pveExecut, name as pveName } from '../commands/prefix/pVe';
 
 const prefixCommands = new Map<string, { execute: Function }>();
 prefixCommands.set(pingName, { execute: pingExecute });
+prefixCommands.set(pveName, { execute: pveExecut });
 
 export async function messageCreate(message: Message) {
   if (!message.content.startsWith('!') || message.author.bot) return;
