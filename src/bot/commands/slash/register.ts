@@ -1,67 +1,43 @@
 import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction } from "discord.js";
-// import { Players } from "../../../types/plyers"
+import registerPlayer from "../../../core/controllers/playerController";
+import { Players } from "../../../types/plyers";
 
-export const playerData = new Map<string, Player>();
-
-interface Player {
-  discordId: string;
-  username: string;
-}
 
 export const data = new SlashCommandBuilder()
     .setName('register')
     .setDescription('Gunakan ini untuk membuat karakter')
-    // .addStringOption(option =>
-    //     option.setName('nama')
-    //         .setDescription('Nama Karater mu')
-    //         .setRequired(true)
-    // )
-    // .addStringOption(option =>
-    //     option.setName('kelas')
-    //         .setDescription('Pilih kelas karakter')
-    //         .setRequired(true)
-    //         .addChoices(
-    //             { name: 'Ksatria', value: 'warrior' },
-    //             { name: 'Penyihir', value: 'mage' },
-    //             { name: 'Pemanah', value: 'archer' }
-    //         )
-    // );
-
-export async function execute(interaction: ChatInputCommandInteraction) {
-    // const nama = interaction.options.getString('nama')!;
-    // const kelas = interaction.options.getString('kelas')!;
-    const discordId = interaction.user.id;
-    const discordUsername = interaction.user.username;
-    const iamgeUser = interaction.user.displayAvatarURL();
+    
 
 
-    // if (playerData.has(discordId)) {
-    //     return interaction.reply({
-    //         content: '❌ Kamu sudah terdaftar!',
-    //         ephemeral: true
-    //     })
-    // }
+export const execute = async (interaction: ChatInputCommandInteraction) => {
+    const newPlayerData: Players = {
+        discordId: interaction.user.id,
+        username: interaction.user.username
+    };
 
-   
-
-    // const newPlayer: Player = {
-    //     discordId,
-    //     username: interaction.user.username
-    // };
-
-    // playerData.set(discordId,newPlayer);
-
-    const embed = new EmbedBuilder()
-        .setTitle('🎉 Pendaftaran Berhasil!')
-        .setDescription(`Player yang baru mendaftar:`)
-        .addFields(
-            { name: 'dicordId', value: `${discordId}`, inline: true },
-            { name: 'Name', value: `${discordUsername}`, inline: true },
-            { name: 'Attack', value: `${iamgeUser}`, inline: true },
-        )
-        .setFooter({text:'ini foternya cok'})
-        .setColor("Green");
-
-    await interaction.reply({ embeds: [embed] });
-
+    await registerPlayer(interaction,newPlayerData);
 }
+
+// export async function execute(interaction: ChatInputCommandInteraction) {
+    
+//     const discordId = interaction.user.id;
+//     const discordUsername = interaction.user.username;
+//     const iamgeUser = interaction.user.displayAvatarURL({size:512});
+
+//     const newPlayer: Player ={
+//         discordId: discordId,
+//         username: discordUsername,
+//     }
+
+    
+//     console.log('Id:',discordId,'baru saja mendaftar');
+//     const embed = new EmbedBuilder()
+//         .setTitle('⚔️ Petualang Baru Telah Muncul!')
+//         .setDescription(`Selamat datang kepada ${discordUsername}, yang telah bangkit untuk menantang takdir di dunia Aetherra.`)
+//         .setThumbnail(iamgeUser)
+//         .setFooter({text:'Semoga petualanganmu penuh kejayaan!'})
+//         .setColor("Green");
+
+//     await interaction.reply({ embeds: [embed] });
+
+// }

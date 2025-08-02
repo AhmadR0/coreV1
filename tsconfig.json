@@ -124,7 +124,15 @@
     "moduleResolution": "node",
     "outDir": "./dist",
     "baseUrl": "./",
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "paths": {
+      "@controllers/*": ["src/core/controllers/*"],
+      "@commands/*": ["src/bot/commands/*"],
+      "@models/*": ["src/core/models/*"]
+    },
+    "types": ["node", "sequelize"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["src"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

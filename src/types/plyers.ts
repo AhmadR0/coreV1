@@ -1,9 +1,7 @@
 export interface Players {
     discordId: string;
     username: string;
-    charName: string;
-    class: string;
-    level: number;
-    hp: number;
-    attack: number
+    level?: number;
+    hp?: number;
+    mp?:number;
 }
